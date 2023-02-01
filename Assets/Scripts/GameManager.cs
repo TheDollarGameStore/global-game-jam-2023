@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int gridSize = 10; // size of the grid, number of cells on each side
     [SerializeField] private float cellSize = 16f; // size of each cell, in units
 
+    [SerializeField] private GameObject scoreCounterPrefab;
+
     [HideInInspector] public GameObject[,] grid;
 
     [HideInInspector] private Segment[,] segmentsGrid;
@@ -211,16 +213,31 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < groups.Count; i++)
         {
+            int groupScore = SumOfDigits(groups[i].Count);
+            //Place score counter for group
+            Instantiate(scoreCounterPrefab, groups[i][Random.Range(0, groups[i].Count)].transform.position, Quaternion.identity).GetComponent<ScoreDisplay>().score = groupScore;
+
             for (int j = 0; j < groups[i].Count; j++)
             {
                 groups[i][j].matched = true;
                 Vector2 gridPos = GetPosOnGrid(groups[i][j]);
-                Destroy(groups[i][j].gameObject, 1f);
+                Destroy(groups[i][j].gameObject, 3f);
                 segmentsGrid[(int)gridPos.y, (int)gridPos.x] = null;
             }
         }
 
-        Invoke("CompressGrid", 1f);
+        Invoke("CompressGrid", 3f);
+    }
+
+    int SumOfDigits(int number)
+    {
+        int sum = 0;
+        while (number > 0)
+        {
+            sum += number;
+            number--;
+        }
+        return sum;
     }
 
     private void SearchForGroup(SegmentColor color, int x, int y, List<Segment> group, Segment[,] segmentsGridDuplicate)

@@ -29,7 +29,8 @@ Transform:
   m_LocalPosition: {x: -8, y: 15.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1029157255744011041}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -103,4 +104,88 @@ MonoBehaviour:
   - {fileID: 321693167, guid: 7e7703faf54a1764f82b742bd689b1d1, type: 3}
   - {fileID: -914871983, guid: 7e7703faf54a1764f82b742bd689b1d1, type: 3}
   color: 2
+  sr: {fileID: 1029157255744011042}
   matched: 0
+--- !u!1001 &4373539585883805913
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4487855016443781639}
+    m_Modifications:
+    - target: {fileID: 3673145120252077048, guid: 44fa4f143cc0b854e86eb0056b0d156f, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3673145120252077048, guid: 44fa4f143cc0b854e86eb0056b0d156f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3673145120252077048, guid: 44fa4f143cc0b854e86eb0056b0d156f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3673145120252077048, guid: 44fa4f143cc0b854e86eb0056b0d156f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3673145120252077048, guid: 44fa4f143cc0b854e86eb0056b0d156f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3673145120252077048, guid: 44fa4f143cc0b854e86eb0056b0d156f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3673145120252077048, guid: 44fa4f143cc0b854e86eb0056b0d156f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3673145120252077048, guid: 44fa4f143cc0b854e86eb0056b0d156f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3673145120252077048, guid: 44fa4f143cc0b854e86eb0056b0d156f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3673145120252077048, guid: 44fa4f143cc0b854e86eb0056b0d156f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3673145120252077048, guid: 44fa4f143cc0b854e86eb0056b0d156f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3673145120252077050, guid: 44fa4f143cc0b854e86eb0056b0d156f, type: 3}
+      propertyPath: m_Name
+      value: FadeSquare
+      objectReference: {fileID: 0}
+    - target: {fileID: 3673145120252077051, guid: 44fa4f143cc0b854e86eb0056b0d156f, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3673145120252077051, guid: 44fa4f143cc0b854e86eb0056b0d156f, type: 3}
+      propertyPath: m_Color.b
+      value: 0.75294125
+      objectReference: {fileID: 0}
+    - target: {fileID: 3673145120252077051, guid: 44fa4f143cc0b854e86eb0056b0d156f, type: 3}
+      propertyPath: m_Color.g
+      value: 0.53333336
+      objectReference: {fileID: 0}
+    - target: {fileID: 3673145120252077051, guid: 44fa4f143cc0b854e86eb0056b0d156f, type: 3}
+      propertyPath: m_Color.r
+      value: 0.16470589
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 44fa4f143cc0b854e86eb0056b0d156f, type: 3}
+--- !u!4 &1029157255744011041 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3673145120252077048, guid: 44fa4f143cc0b854e86eb0056b0d156f, type: 3}
+  m_PrefabInstance: {fileID: 4373539585883805913}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1029157255744011042 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3673145120252077051, guid: 44fa4f143cc0b854e86eb0056b0d156f, type: 3}
+  m_PrefabInstance: {fileID: 4373539585883805913}
+  m_PrefabAsset: {fileID: 0}

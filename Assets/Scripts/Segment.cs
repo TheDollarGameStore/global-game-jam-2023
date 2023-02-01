@@ -17,25 +17,27 @@ public class Segment : MonoBehaviour
 
     public SegmentColor color;
 
-    private SpriteRenderer sr;
+    [SerializeField] private SpriteRenderer sr;
+
+    private SpriteRenderer selfSr;
 
     [HideInInspector] public bool matched;
 
     private void Awake()
     {
-        sr = GetComponent<SpriteRenderer>();
+        selfSr = GetComponent<SpriteRenderer>();
     }
     // Start is called before the first frame update
     public void SetSegment(int value)
     {
-        sr.sprite = segments[value];
+        selfSr.sprite = segments[value];
     }
 
     public void Update()
     {
         if (matched)
         {
-            sr.color = Color.Lerp(sr.color, Color.black, 5f * Time.deltaTime);
+            sr.color = Color.Lerp(sr.color, new Color(sr.color.r, sr.color.g, sr.color.b, 1f), 10f * Time.deltaTime);
         }
     }
 }
