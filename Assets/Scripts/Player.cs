@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
 {
     [HideInInspector] public int gridPosX;
 
+    [SerializeField] private AudioClip moveSound;
+
     private bool right = true;
     // Start is called before the first frame update
     void Start()
@@ -27,12 +29,14 @@ public class Player : MonoBehaviour
         {
             gridPosX = Mathf.Max(gridPosX - 1, 0);
             right = false;
+            SoundManager.instance.PlayRandomized(moveSound);
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             gridPosX = Mathf.Min(5, gridPosX + 1);
             right = true;
+            SoundManager.instance.PlayRandomized(moveSound);
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))

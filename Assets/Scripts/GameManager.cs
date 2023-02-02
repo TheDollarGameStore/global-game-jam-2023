@@ -44,6 +44,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Wobble rentWobbler;
     [SerializeField] private Wobble dayTextWobbler;
 
+    [SerializeField] private AudioClip plantSound;
+    [SerializeField] private AudioClip harvestSound;
+    [SerializeField] private AudioClip placeSound;
+    [SerializeField] private AudioClip popSound;
+    [SerializeField] private AudioClip scoreCount;
+    [SerializeField] private AudioClip cashSound;
+    [SerializeField] private AudioClip tickSound;
+    [SerializeField] private AudioClip rotSound;
+    [SerializeField] private AudioClip loseSound;
+
     private int money;
     private int moneyDisplay;
     private int day = 1;
@@ -97,6 +107,8 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
+
+        SoundManager.instance.PlayRandomized(placeSound);
 
         CameraBehaviour.instance.Nudge();
 
@@ -158,6 +170,7 @@ public class GameManager : MonoBehaviour
 
     void ShowHarvest()
     {
+        SoundManager.instance.PlayNormal(harvestSound);
         harvestText.show = true;
         overlay.show = true;
         Invoke("HideHarvest", 1.5f);
@@ -232,6 +245,7 @@ public class GameManager : MonoBehaviour
             rentText.text = "-$" + rent.ToString();
             rentWobbler.DoTheWobble();
             Invoke("ShowPlant", 1f);
+            SoundManager.instance.PlayRandomized(tickSound);
         }
         else
         {
@@ -241,12 +255,14 @@ public class GameManager : MonoBehaviour
 
     void GameOver()
     {
+        SoundManager.instance.PlayNormal(loseSound);
         overlay.show = true;
         brokeText.show = true;
     }
 
     void ShowPlant()
     {
+        SoundManager.instance.PlayNormal(plantSound);
         plantText.show = true;
         overlay.show = true;
         Invoke("HidePlant", 1.5f);
@@ -340,11 +356,12 @@ public class GameManager : MonoBehaviour
         Invoke("StartCounting", 1f);
         Invoke("ShakeScreen", 3f);
         Invoke("CompressGrid", 3f);
-        Invoke("PayRent", 4f);
+        Invoke("PayRent", 3.75f);
     }
 
     void PayRent()
     {
+        SoundManager.instance.PlayRandomized(cashSound);
         moneyWobbler.DoTheWobble();
         rentWobbler.DoTheWobble();
         money -= rent;
@@ -354,12 +371,14 @@ public class GameManager : MonoBehaviour
 
     void StartCounting()
     {
+        SoundManager.instance.PlayRandomized(scoreCount);
         moneyCounting = true;
     }
 
     void ShakeScreen()
     {
-        CameraBehaviour.instance.Shake(4f);
+        CameraBehaviour.instance.Shake(6f);
+        SoundManager.instance.PlayRandomized(popSound);
     }
 
     int SumOfDigits(int number)
@@ -445,12 +464,14 @@ public class GameManager : MonoBehaviour
         }
 
         Invoke("Rot", 1.5f);
-        Invoke("TickDay", 2.25f);
+        Invoke("TickDay", 2.75f);
         RefreshSegmentLinks();
     }
 
     void Rot()
     {
+        bool anyRot = false;
+
         for (int y = 0; y < gridSize; y++)
         {
             for (int x = 0; x < gridSize; x++)
@@ -459,6 +480,7 @@ public class GameManager : MonoBehaviour
                 {
                     if (segmentsGrid[y, x] != null && segmentsGrid[y, x].color != SegmentColor.ROTTEN)
                     {
+                        anyRot = true;
                         Destroy(segmentsGrid[y, x].gameObject);
                         segmentsGrid[y, x] = Instantiate(rottenSegment, grid[y, x].transform.position, Quaternion.identity).GetComponent<Segment>();
                     }
@@ -466,5 +488,10 @@ public class GameManager : MonoBehaviour
             }
         }
         RefreshSegmentLinks();
+
+        if (anyRot)
+        {
+            SoundManager.instance.PlayRandomized(rotSound);
+        }
     }
 }

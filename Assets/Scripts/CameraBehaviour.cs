@@ -26,7 +26,7 @@ public class CameraBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
-        shake = Mathf.Max(0f, shake - 0.5f);
+        shake = Mathf.Max(0f, shake - 0.25f);
         transform.position += (Vector3) new Vector2(Random.Range(-shake, shake), Random.Range(-shake, shake));
     }
 
