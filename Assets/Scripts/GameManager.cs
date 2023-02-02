@@ -266,7 +266,7 @@ public class GameManager : MonoBehaviour
 
     void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Transitioner.Instance.TransitionToScene(SceneManager.GetActiveScene().name);
     }
 
     void ShowPlant()
