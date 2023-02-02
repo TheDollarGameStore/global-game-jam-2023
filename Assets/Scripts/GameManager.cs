@@ -223,6 +223,7 @@ public class GameManager : MonoBehaviour
             rent = 10 + ((day - 1) * 5);
             rentText.text = "-$" + rent.ToString();
             rentWobbler.DoTheWobble();
+            Invoke("ShowPlant", 1f);
         }
         else
         {
@@ -285,7 +286,6 @@ public class GameManager : MonoBehaviour
             Invoke("Rot", 1f);
             Invoke("PayRent", 2f);
             Invoke("TickDay", 3f);
-            Invoke("ShowPlant", 3.75f);
         }
     }
 
@@ -432,7 +432,6 @@ public class GameManager : MonoBehaviour
 
         Invoke("Rot", 1.5f);
         Invoke("TickDay", 2.25f);
-        Invoke("ShowPlant", 3f);
         RefreshSegmentLinks();
     }
 
