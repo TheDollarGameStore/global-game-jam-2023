@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -30,6 +31,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ShowHide plantText;
     [SerializeField] private ShowHide harvestText;
     [SerializeField] private Fader overlay;
+
+    [SerializeField] private Text moneyText;
+    [SerializeField] private Text rentText;
+    [SerializeField] private Wobble moneyWobbler;
+    [SerializeField] private Wobble rentWobbler;
+
+    private int money;
+    private int moneyDisplay;
+    private int day = 1;
+    private int rent = 10;
+
+    private bool moneyCounting;
+
 
     private void Awake()
     {
@@ -197,6 +211,14 @@ public class GameManager : MonoBehaviour
         }     
     }
 
+    void TickDay()
+    {
+        day += 1;
+        rent = 10 + ((day - 1) * 5);
+        rentText.text = "-$" + rent.ToString();
+        rentWobbler.DoTheWobble();
+    }
+
     void ShowPlant()
     {
         plantText.show = true;
@@ -249,15 +271,34 @@ public class GameManager : MonoBehaviour
         else
         {
             Invoke("Rot", 1f);
-            Invoke("ShowPlant", 2f);
+            Invoke("PayRent", 2f);
+            Invoke("TickDay", 3f);
+            Invoke("ShowPlant", 3.75f);
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (moneyCounting)
+        {
+            if (moneyDisplay < money)
+            {
+                moneyDisplay = Mathf.Min(money, moneyDisplay + 2);
+                moneyText.text = "$" + moneyDisplay.ToString();
+            }
+            else
+            {
+                moneyCounting = false;
+            }
+        }
+    }
     void ProcessMatches(List<List<Segment>> groups)
     {
         for (int i = 0; i < groups.Count; i++)
         {
             int groupScore = groups[i][0].color != SegmentColor.ROTTEN ? SumOfDigits(groups[i].Count) : 0;
+
+            money += groupScore;
             //Place score counter for group
             Instantiate(scoreCounterPrefab, groups[i][Random.Range(0, groups[i].Count)].transform.position, Quaternion.identity).GetComponent<ScoreDisplay>().score = groupScore;
 
@@ -270,8 +311,24 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        Invoke("StartCounting", 1f);
         Invoke("ShakeScreen", 3f);
         Invoke("CompressGrid", 3f);
+        Invoke("PayRent", 4f);
+    }
+
+    void PayRent()
+    {
+        moneyWobbler.DoTheWobble();
+        rentWobbler.DoTheWobble();
+        money -= rent;
+        moneyDisplay = money;
+        moneyText.text = "$" + moneyDisplay.ToString();
+    }
+
+    void StartCounting()
+    {
+        moneyCounting = true;
     }
 
     void ShakeScreen()
@@ -361,9 +418,9 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        Invoke("Rot", 1.25f);
-
-        Invoke("ShowPlant", 2.25f);
+        Invoke("Rot", 1.5f);
+        Invoke("TickDay", 2.25f);
+        Invoke("ShowPlant", 3f);
         RefreshSegmentLinks();
     }
 
