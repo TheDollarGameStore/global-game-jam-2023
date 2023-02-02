@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip tickSound;
     [SerializeField] private AudioClip rotSound;
     [SerializeField] private AudioClip loseSound;
+    [SerializeField] private Text statsText;
 
     private int money;
     private int moneyDisplay;
@@ -241,7 +243,7 @@ public class GameManager : MonoBehaviour
             day += 1;
             dayText.text = "DAY " + day.ToString();
             dayTextWobbler.DoTheWobble();
-            rent = 10 + ((day - 1) * 5);
+            rent = 10 + ((day - 1) * 4);
             rentText.text = "-$" + rent.ToString();
             rentWobbler.DoTheWobble();
             Invoke("ShowPlant", 1f);
@@ -255,9 +257,16 @@ public class GameManager : MonoBehaviour
 
     void GameOver()
     {
+        statsText.text = "You Survived " + day.ToString() + " Days";
         SoundManager.instance.PlayNormal(loseSound);
         overlay.show = true;
         brokeText.show = true;
+        Invoke("Restart", 4f);
+    }
+
+    void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void ShowPlant()
