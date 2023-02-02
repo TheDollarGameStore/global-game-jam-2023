@@ -34,8 +34,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Text moneyText;
     [SerializeField] private Text rentText;
+    [SerializeField] private Text dayText;
     [SerializeField] private Wobble moneyWobbler;
     [SerializeField] private Wobble rentWobbler;
+    [SerializeField] private Wobble dayTextWobbler;
 
     private int money;
     private int moneyDisplay;
@@ -213,10 +215,20 @@ public class GameManager : MonoBehaviour
 
     void TickDay()
     {
-        day += 1;
-        rent = 10 + ((day - 1) * 5);
-        rentText.text = "-$" + rent.ToString();
-        rentWobbler.DoTheWobble();
+        if (money >= 0)
+        {
+            day += 1;
+            dayText.text = "DAY " + day.ToString();
+            dayTextWobbler.DoTheWobble();
+            rent = 10 + ((day - 1) * 5);
+            rentText.text = "-$" + rent.ToString();
+            rentWobbler.DoTheWobble();
+        }
+        else
+        {
+            Debug.Log("GameOver");
+            paused = true;
+        }
     }
 
     void ShowPlant()
