@@ -8,7 +8,8 @@ public enum SegmentColor
     ORANGE,
     RED,
     BLUE,
-    PURPLE
+    PURPLE,
+    ROTTEN
 }
 
 public class Segment : MonoBehaviour

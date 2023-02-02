@@ -17,7 +17,12 @@ public class Player : MonoBehaviour
     void Update()
     {
         transform.position = Vector2.Lerp(transform.position, new Vector2(GameManager.instance.grid[0, gridPosX].transform.position.x, transform.position.y), 15f * Time.deltaTime);
+        transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(right ? 1f : -1f, 1f, 1f), 15f * Time.deltaTime);
 
+        if (GameManager.instance.paused)
+        {
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             gridPosX = Mathf.Max(gridPosX - 1, 0);
@@ -34,7 +39,5 @@ public class Player : MonoBehaviour
         {
             GameManager.instance.PlacePiece();
         }
-
-        transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(right ? 1f : -1f, 1f, 1f), 15f * Time.deltaTime);
     }
 }

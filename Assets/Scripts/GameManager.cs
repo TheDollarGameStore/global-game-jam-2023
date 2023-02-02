@@ -19,9 +19,17 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public Piece currentPiece;
 
+    [SerializeField] private GameObject rottenSegment;
+
     public Player player;
 
     public static GameManager instance = null;
+
+    [HideInInspector] public bool paused;
+
+    [SerializeField] private ShowHide plantText;
+    [SerializeField] private ShowHide harvestText;
+    [SerializeField] private Fader overlay;
 
     private void Awake()
     {
@@ -66,6 +74,8 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
+
+        CameraBehaviour.instance.Nudge();
 
         ShiftPiecesInColumn(pieceHeight);
 
@@ -116,8 +126,23 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Harvest();
+            paused = true;
+            ShowHarvest();
+            Invoke("Harvest", 2.25f);
         }
+    }
+
+    void ShowHarvest()
+    {
+        harvestText.show = true;
+        overlay.show = true;
+        Invoke("HideHarvest", 1.5f);
+    }
+
+    void HideHarvest()
+    {
+        harvestText.show = false;
+        overlay.show = false;
     }
 
     void LerpSegments()
@@ -169,7 +194,21 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
-        }
+        }     
+    }
+
+    void ShowPlant()
+    {
+        plantText.show = true;
+        overlay.show = true;
+        Invoke("HidePlant", 1.5f);
+    }
+
+    void HidePlant()
+    {
+        plantText.show = false;
+        overlay.show = false;
+        paused = false;
     }
 
     void Harvest()
@@ -207,13 +246,18 @@ public class GameManager : MonoBehaviour
         {
             ProcessMatches(groups);
         }
+        else
+        {
+            Invoke("Rot", 1f);
+            Invoke("ShowPlant", 2f);
+        }
     }
 
     void ProcessMatches(List<List<Segment>> groups)
     {
         for (int i = 0; i < groups.Count; i++)
         {
-            int groupScore = SumOfDigits(groups[i].Count);
+            int groupScore = groups[i][0].color != SegmentColor.ROTTEN ? SumOfDigits(groups[i].Count) : 0;
             //Place score counter for group
             Instantiate(scoreCounterPrefab, groups[i][Random.Range(0, groups[i].Count)].transform.position, Quaternion.identity).GetComponent<ScoreDisplay>().score = groupScore;
 
@@ -226,7 +270,13 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        Invoke("ShakeScreen", 3f);
         Invoke("CompressGrid", 3f);
+    }
+
+    void ShakeScreen()
+    {
+        CameraBehaviour.instance.Shake(4f);
     }
 
     int SumOfDigits(int number)
@@ -311,6 +361,28 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        Invoke("Rot", 1.25f);
+
+        Invoke("ShowPlant", 2.25f);
+        RefreshSegmentLinks();
+    }
+
+    void Rot()
+    {
+        for (int y = 0; y < gridSize; y++)
+        {
+            for (int x = 0; x < gridSize; x++)
+            {
+                if (Random.Range(0, 4) == 0)
+                {
+                    if (segmentsGrid[y, x] != null && segmentsGrid[y, x].color != SegmentColor.ROTTEN)
+                    {
+                        Destroy(segmentsGrid[y, x].gameObject);
+                        segmentsGrid[y, x] = Instantiate(rottenSegment, grid[y, x].transform.position, Quaternion.identity).GetComponent<Segment>();
+                    }
+                }
+            }
+        }
         RefreshSegmentLinks();
     }
 }
