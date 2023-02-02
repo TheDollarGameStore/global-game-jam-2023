@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private ShowHide plantText;
     [SerializeField] private ShowHide harvestText;
+    [SerializeField] private ShowHide brokeText;
     [SerializeField] private Fader overlay;
 
     [SerializeField] private Text moneyText;
@@ -227,9 +228,14 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("GameOver");
-            paused = true;
+            GameOver();
         }
+    }
+
+    void GameOver()
+    {
+        overlay.show = true;
+        brokeText.show = true;
     }
 
     void ShowPlant()
