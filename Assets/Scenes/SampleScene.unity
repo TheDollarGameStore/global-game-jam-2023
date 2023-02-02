@@ -1033,7 +1033,9 @@ MonoBehaviour:
   scoreCounterPrefab: {fileID: 2309926506863178332, guid: fa1f895a656a8ec4db902ea95bc0a6d9, type: 3}
   piecePrefab: {fileID: 3345700495572404344, guid: da358d7e32069fd44af0fd4c643b7d67, type: 3}
   currentPiece: {fileID: 0}
+  nextPiece: {fileID: 0}
   rottenSegment: {fileID: 1353395064860710513, guid: 2e7816c0d69dfa744a2b8427ac294a97, type: 3}
+  explosionPrefab: {fileID: 8209042352051589179, guid: b7444dba9643630478d75b60a08ba483, type: 3}
   player: {fileID: 2026596131}
   paused: 0
   plantText: {fileID: 427524924}

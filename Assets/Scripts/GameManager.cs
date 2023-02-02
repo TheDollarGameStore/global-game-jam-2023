@@ -20,7 +20,11 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public Piece currentPiece;
 
+    [HideInInspector] public Piece nextPiece;
+
     [SerializeField] private GameObject rottenSegment;
+
+    [SerializeField] private GameObject explosionPrefab;
 
     public Player player;
 
@@ -59,12 +63,14 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         GenerateGrid();
+        nextPiece = Instantiate(piecePrefab, new Vector2(100, 108), Quaternion.identity).GetComponent<Piece>();
         NextPiece();
     }
 
     void NextPiece()
     {
-        currentPiece = Instantiate(piecePrefab, player.transform.position, Quaternion.identity).GetComponent<Piece>();
+        currentPiece = nextPiece;
+        nextPiece = Instantiate(piecePrefab, new Vector2(100, 108), Quaternion.identity).GetComponent<Piece>();
     }
 
     public void GenerateGrid()
@@ -139,9 +145,10 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        currentPiece.transform.position = player.transform.position + (Vector3)(Vector2.up * currentPiece.segments.Count * 16f);
         LerpSegments();
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && !paused)
         {
             paused = true;
             ShowHarvest();
@@ -324,6 +331,7 @@ public class GameManager : MonoBehaviour
             {
                 groups[i][j].matched = true;
                 Vector2 gridPos = GetPosOnGrid(groups[i][j]);
+                Instantiate(explosionPrefab, groups[i][j].transform.position, Quaternion.identity);
                 Destroy(groups[i][j].gameObject, 3f);
                 segmentsGrid[(int)gridPos.y, (int)gridPos.x] = null;
             }

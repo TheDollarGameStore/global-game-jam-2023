@@ -24,6 +24,7 @@ public class Segment : MonoBehaviour
 
     [HideInInspector] public bool matched;
 
+
     private void Awake()
     {
         selfSr = GetComponent<SpriteRenderer>();

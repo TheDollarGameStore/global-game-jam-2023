@@ -14,7 +14,6 @@ public class Piece : MonoBehaviour
     void Awake()
     {
         Generate();
-        transform.position = GameManager.instance.player.transform.position + (Vector3)(Vector2.up * segments.Count * 16f);
     }
 
     void Generate()
@@ -45,12 +44,5 @@ public class Piece : MonoBehaviour
             
             segments.Add(newSegment);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        transform.position = GameManager.instance.player.transform.position + (Vector3)(Vector2.up * segments.Count * 16f);
-
     }
 }
