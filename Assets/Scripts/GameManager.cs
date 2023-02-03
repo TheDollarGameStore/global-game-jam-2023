@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ShowHide plantText;
     [SerializeField] private ShowHide harvestText;
     [SerializeField] private ShowHide brokeText;
-    [SerializeField] private Fader overlay;
+    [SerializeField] public Fader overlay;
 
     [SerializeField] private Text moneyText;
     [SerializeField] private Text rentText;
